@@ -1,0 +1,138 @@
+---
+/**
+ * SearchBar Component
+ *
+ * Search bar with filters for property search.
+ * Features: property type, price range, and bedrooms selects.
+ * Responsive: horizontal on desktop, stacked on mobile.
+ *
+ * Following Design System: Terracota Mediterranea palette
+ * Following HOME_DESIGN.md section "3. SEARCH BAR"
+ *
+ * @see /docs/HOME_DESIGN.md for design reference
+ */
+
+import { Search } from '@lucide/astro';
+import Button from '@/components/ui/Button.astro';
+
+// TODO: Conectar con búsqueda real
+// Por ahora solo navega a /propiedades con query params
+---
+
+<section
+  class="bg-background border-b border-gray-200 shadow-sm"
+  aria-label="Buscador de propiedades"
+>
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-6">
+    <form
+      action="/propiedades"
+      method="get"
+      class="flex flex-col md:flex-row items-stretch md:items-center gap-3 md:gap-4"
+    >
+      <!-- Tipo de propiedad -->
+      <div class="flex-1">
+        <label for="tipo-propiedad" class="sr-only">Tipo de propiedad</label>
+        <div class="relative">
+          <select
+            id="tipo-propiedad"
+            name="tipo"
+            class="w-full px-4 py-3 bg-background border border-input rounded-md text-base text-foreground transition-colors hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:border-transparent appearance-none cursor-pointer"
+          >
+            <option value="">Tipo de propiedad</option>
+            <option value="piso">Piso</option>
+            <option value="atico">Ático</option>
+            <option value="casa">Casa / Chalet</option>
+            <option value="duplex">Dúplex</option>
+            <option value="estudio">Estudio</option>
+          </select>
+          <!-- Custom dropdown arrow -->
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+            <svg
+              class="h-4 w-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rango de precio -->
+      <div class="flex-1">
+        <label for="precio" class="sr-only">Rango de precio</label>
+        <div class="relative">
+          <select
+            id="precio"
+            name="precio"
+            class="w-full px-4 py-3 bg-background border border-input rounded-md text-base text-foreground transition-colors hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:border-transparent appearance-none cursor-pointer"
+          >
+            <option value="">Precio</option>
+            <option value="0-100000">Hasta 100.000 euros</option>
+            <option value="100000-200000">100.000 - 200.000 euros</option>
+            <option value="200000-300000">200.000 - 300.000 euros</option>
+            <option value="300000-500000">300.000 - 500.000 euros</option>
+            <option value="500000+">Más de 500.000 euros</option>
+          </select>
+          <!-- Custom dropdown arrow -->
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+            <svg
+              class="h-4 w-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Habitaciones -->
+      <div class="flex-1">
+        <label for="habitaciones" class="sr-only">Habitaciones</label>
+        <div class="relative">
+          <select
+            id="habitaciones"
+            name="habitaciones"
+            class="w-full px-4 py-3 bg-background border border-input rounded-md text-base text-foreground transition-colors hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:border-transparent appearance-none cursor-pointer"
+          >
+            <option value="">Habitaciones</option>
+            <option value="1">1 habitación</option>
+            <option value="2">2 habitaciones</option>
+            <option value="3">3 habitaciones</option>
+            <option value="4">4+ habitaciones</option>
+          </select>
+          <!-- Custom dropdown arrow -->
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+            <svg
+              class="h-4 w-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón buscar -->
+      <div class="md:flex-shrink-0">
+        <Button
+          type="submit"
+          variant="primary"
+          size="md"
+          class="w-full md:w-auto md:whitespace-nowrap"
+        >
+          <Search class="w-5 h-5" aria-hidden="true" />
+          <span>Buscar</span>
+        </Button>
+      </div>
+    </form>
+  </div>
+</section>
