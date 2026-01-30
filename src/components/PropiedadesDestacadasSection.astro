@@ -1,0 +1,141 @@
+---
+/**
+ * Propiedades Destacadas Section
+ *
+ * Displays a grid of featured property listings on the home page.
+ * Uses SSG (Static Site Generation) - properties are hardcoded mock data.
+ *
+ * Grid responsive:
+ * - Mobile (<768px): 1 column
+ * - Tablet (768px-1024px): 2 columns
+ * - Desktop (>=1024px): 3 columns
+ */
+
+import type { Property } from '@/types';
+import PropertyCard from '@/components/PropertyCard.astro';
+import Button from '@/components/ui/Button.astro';
+import { ArrowRight } from 'lucide-astro';
+
+/**
+ * Mock data for featured properties
+ * In the future, this will come from a CMS or database
+ */
+const propiedades: Property[] = [
+  {
+    id: '1',
+    title: 'Piso reformado en el centro',
+    location: 'Valencia',
+    price: 185000,
+    image: undefined,
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 95,
+    isNew: true,
+  },
+  {
+    id: '2',
+    title: 'Ático con terraza',
+    location: 'Burjassot',
+    price: 220000,
+    image: undefined,
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 80,
+    isFeatured: true,
+  },
+  {
+    id: '3',
+    title: 'Casa unifamiliar con jardín',
+    location: 'Godella',
+    price: 350000,
+    image: undefined,
+    bedrooms: 4,
+    bathrooms: 3,
+    area: 180,
+  },
+  {
+    id: '4',
+    title: 'Dúplex moderno cerca del metro',
+    location: 'Burjassot',
+    price: 275000,
+    image: undefined,
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 130,
+    isNew: true,
+  },
+  {
+    id: '5',
+    title: 'Piso luminoso con vistas',
+    location: 'Paterna',
+    price: 165000,
+    image: undefined,
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 75,
+  },
+  {
+    id: '6',
+    title: 'Chalet adosado con piscina',
+    location: 'Rocafort',
+    price: 420000,
+    image: undefined,
+    bedrooms: 4,
+    bathrooms: 3,
+    area: 200,
+    isFeatured: true,
+  },
+];
+---
+
+<section
+  id="propiedades"
+  class="py-12 md:py-16 lg:py-20 bg-background"
+  aria-labelledby="propiedades-title"
+>
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <!-- Section Header -->
+    <div class="text-center mb-12 md:mb-16">
+      <h2
+        id="propiedades-title"
+        class="font-display text-3xl md:text-4xl font-bold text-gray-700 leading-tight mb-4"
+      >
+        Propiedades Destacadas
+      </h2>
+      <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+        Viviendas seleccionadas en Burjassot y alrededores. Explora nuestras opciones y encuentra tu próximo hogar.
+      </p>
+    </div>
+
+    <!-- Properties Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
+      {propiedades.map((propiedad) => (
+        <PropertyCard
+          id={propiedad.id}
+          title={propiedad.title}
+          location={propiedad.location}
+          price={propiedad.price}
+          image={propiedad.image}
+          bedrooms={propiedad.bedrooms}
+          bathrooms={propiedad.bathrooms}
+          area={propiedad.area}
+          isNew={propiedad.isNew}
+          isFeatured={propiedad.isFeatured}
+        />
+      ))}
+    </div>
+
+    <!-- CTA: Ver todas las propiedades -->
+    <div class="text-center">
+      <Button
+        as="a"
+        href="/propiedades"
+        variant="outline"
+        size="lg"
+      >
+        Ver Todas las Propiedades
+        <ArrowRight class="w-5 h-5" aria-hidden="true" />
+      </Button>
+    </div>
+  </div>
+</section>
