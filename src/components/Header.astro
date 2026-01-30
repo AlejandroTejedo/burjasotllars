@@ -1,0 +1,341 @@
+---
+/**
+ * Header Component - HU-003
+ *
+ * Sticky header with navigation for Burjassot Llars
+ * - Desktop: Logo + horizontal nav + CTA button
+ * - Mobile: Logo + hamburger menu with slide-out panel
+ * - Adds shadow on scroll
+ * - Keyboard accessible with visible focus states
+ */
+import { House, Menu, X, Phone } from '@lucide/astro';
+import { cn } from '@/lib/utils';
+
+interface NavLink {
+  label: string;
+  href: string;
+  isExternal?: boolean;
+}
+
+const navLinks: NavLink[] = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Propiedades', href: '/propiedades' },
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Sobre Nosotros', href: '#sobre-nosotros' },
+  { label: 'Contacto', href: '#contacto' },
+];
+
+const phoneNumber = '+34 639 280 786';
+const phoneHref = 'tel:+34639280786';
+---
+
+<header
+  id="main-header"
+  class={cn(
+    'sticky top-0 z-50',
+    'bg-background/95 backdrop-blur-sm',
+    'border-b border-gray-200',
+    'transition-shadow duration-300'
+  )}
+>
+  <div
+    class={cn(
+      'w-full max-w-7xl mx-auto',
+      'px-4 sm:px-6 md:px-8 lg:px-12',
+      'h-16 md:h-20',
+      'flex items-center justify-between'
+    )}
+  >
+    <!-- Logo -->
+    <a
+      href="/"
+      class={cn(
+        'flex items-center gap-2',
+        'text-xl md:text-2xl font-display font-bold text-gray-700',
+        'transition-colors',
+        'hover:text-primary',
+        'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:rounded-lg'
+      )}
+    >
+      <House class="w-6 h-6 md:w-8 md:h-8 text-primary" aria-hidden="true" />
+      <span>L&A Burjassot Llars</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden lg:flex items-center gap-8" aria-label="Navegacion principal">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class={cn(
+            'text-base font-medium text-gray-700',
+            'transition-colors',
+            'hover:text-primary',
+            'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:rounded-lg',
+            'py-2 px-1'
+          )}
+        >
+          {link.label}
+        </a>
+      ))}
+
+      <!-- CTA Button - Desktop -->
+      <a
+        href={phoneHref}
+        class={cn(
+          'inline-flex items-center gap-2',
+          'px-6 py-3',
+          'bg-primary text-primary-foreground',
+          'font-semibold text-base',
+          'rounded-lg',
+          'transition-colors',
+          'hover:bg-primary-dark',
+          'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'
+        )}
+      >
+        <Phone class="w-5 h-5" aria-hidden="true" />
+        Contactar
+      </a>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button
+      id="mobile-menu-button"
+      type="button"
+      class={cn(
+        'lg:hidden',
+        'inline-flex items-center justify-center',
+        'w-10 h-10',
+        'text-gray-700',
+        'rounded-lg',
+        'transition-colors',
+        'hover:bg-gray-100',
+        'focus:outline-none focus:ring-2 focus:ring-primary'
+      )}
+      aria-label="Abrir menu de navegacion"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <Menu id="menu-icon" class="w-6 h-6" aria-hidden="true" />
+      <X id="close-icon" class="w-6 h-6 hidden" aria-hidden="true" />
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div
+  id="mobile-menu-overlay"
+  class={cn(
+    'fixed inset-0 z-40',
+    'bg-black/50 backdrop-blur-sm',
+    'lg:hidden',
+    'opacity-0 invisible',
+    'transition-all duration-300'
+  )}
+  aria-hidden="true"
+></div>
+
+<!-- Mobile Menu Panel -->
+<nav
+  id="mobile-menu"
+  class={cn(
+    'fixed top-0 right-0 z-50',
+    'w-full max-w-sm h-full',
+    'bg-background',
+    'shadow-xl',
+    'lg:hidden',
+    'transform translate-x-full',
+    'transition-transform duration-300 ease-in-out'
+  )}
+  aria-label="Menu de navegacion movil"
+  aria-hidden="true"
+>
+  <!-- Mobile Menu Header -->
+  <div class="flex items-center justify-between h-16 px-4 border-b border-gray-200">
+    <span class="text-lg font-display font-bold text-gray-700">Menu</span>
+    <button
+      id="mobile-menu-close"
+      type="button"
+      class={cn(
+        'inline-flex items-center justify-center',
+        'w-10 h-10',
+        'text-gray-700',
+        'rounded-lg',
+        'transition-colors',
+        'hover:bg-gray-100',
+        'focus:outline-none focus:ring-2 focus:ring-primary'
+      )}
+      aria-label="Cerrar menu de navegacion"
+    >
+      <X class="w-6 h-6" aria-hidden="true" />
+    </button>
+  </div>
+
+  <!-- Mobile Menu Links -->
+  <div class="flex flex-col p-4">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class={cn(
+          'py-4 px-2',
+          'text-lg font-medium text-gray-700',
+          'border-b border-gray-100',
+          'transition-colors',
+          'hover:text-primary hover:bg-gray-50',
+          'focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary'
+        )}
+        data-mobile-link
+      >
+        {link.label}
+      </a>
+    ))}
+
+    <!-- Phone Number - Mobile -->
+    <a
+      href={phoneHref}
+      class={cn(
+        'mt-4 py-3 px-2',
+        'flex items-center gap-2',
+        'text-base font-medium text-gray-600',
+        'transition-colors',
+        'hover:text-primary',
+        'focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary'
+      )}
+    >
+      <Phone class="w-5 h-5" aria-hidden="true" />
+      {phoneNumber}
+    </a>
+
+    <!-- CTA Button - Mobile -->
+    <a
+      href={phoneHref}
+      class={cn(
+        'mt-6',
+        'inline-flex items-center justify-center gap-2',
+        'w-full px-6 py-4',
+        'bg-primary text-primary-foreground',
+        'font-semibold text-lg',
+        'rounded-lg',
+        'transition-colors',
+        'hover:bg-primary-dark',
+        'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'
+      )}
+    >
+      <Phone class="w-5 h-5" aria-hidden="true" />
+      Contactar
+    </a>
+  </div>
+</nav>
+
+<script>
+  /**
+   * Header scroll shadow behavior
+   * Adds shadow-md class when scrolled past threshold
+   */
+  function initScrollShadow(): void {
+    const header = document.getElementById('main-header');
+    if (!header) return;
+
+    const SCROLL_THRESHOLD = 10;
+
+    function updateShadow(): void {
+      if (window.scrollY > SCROLL_THRESHOLD) {
+        header?.classList.add('shadow-md');
+      } else {
+        header?.classList.remove('shadow-md');
+      }
+    }
+
+    window.addEventListener('scroll', updateShadow, { passive: true });
+    updateShadow(); // Initial check
+  }
+
+  /**
+   * Mobile menu toggle functionality
+   * Handles open/close states, focus trapping, and escape key
+   */
+  function initMobileMenu(): void {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const menuCloseButton = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const overlay = document.getElementById('mobile-menu-overlay');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+    const mobileLinks = document.querySelectorAll('[data-mobile-link]');
+
+    if (!menuButton || !mobileMenu || !overlay || !menuCloseButton) return;
+
+    let isOpen = false;
+
+    function openMenu(): void {
+      isOpen = true;
+      mobileMenu?.classList.remove('translate-x-full');
+      mobileMenu?.setAttribute('aria-hidden', 'false');
+      overlay?.classList.remove('opacity-0', 'invisible');
+      overlay?.classList.add('opacity-100', 'visible');
+      menuButton?.setAttribute('aria-expanded', 'true');
+      menuIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      // Focus first interactive element in menu
+      menuCloseButton?.focus();
+    }
+
+    function closeMenu(): void {
+      isOpen = false;
+      mobileMenu?.classList.add('translate-x-full');
+      mobileMenu?.setAttribute('aria-hidden', 'true');
+      overlay?.classList.add('opacity-0', 'invisible');
+      overlay?.classList.remove('opacity-100', 'visible');
+      menuButton?.setAttribute('aria-expanded', 'false');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      document.body.style.overflow = '';
+
+      // Return focus to menu button
+      menuButton?.focus();
+    }
+
+    function toggleMenu(): void {
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    }
+
+    // Event listeners
+    menuButton.addEventListener('click', toggleMenu);
+    menuCloseButton.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+
+    // Close on link click
+    mobileLinks.forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        closeMenu();
+      }
+    });
+
+    // Close on resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1024 && isOpen) {
+        closeMenu();
+      }
+    });
+  }
+
+  // Initialize on page load
+  document.addEventListener('astro:page-load', () => {
+    initScrollShadow();
+    initMobileMenu();
+  });
+
+  // Also run on initial load for non-SPA navigation
+  initScrollShadow();
+  initMobileMenu();
+</script>
