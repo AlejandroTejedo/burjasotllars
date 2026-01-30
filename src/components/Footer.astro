@@ -2,7 +2,7 @@
 /**
  * Footer.astro
  *
- * Footer informativo con logo, navegacion, contacto, horario, redes sociales y enlaces legales.
+ * Footer informativo con logo, navegación, contacto, horario, redes sociales y enlaces legales.
  * Implementa HU-004: Footer informativo para la web de Burjassot Llars.
  *
  * Responsive:
@@ -13,7 +13,7 @@
 
 import { Home as HomeIcon, Phone, MapPin, Clock, MessageCircle, Instagram, Facebook, Linkedin } from '@lucide/astro';
 
-// Ano dinamico para el copyright
+// Año dinámico para el copyright
 const currentYear = new Date().getFullYear();
 
 // Datos de contacto
@@ -25,13 +25,13 @@ const contactInfo = {
   addressHref: 'https://maps.google.com/?q=Avda+Ausias+March+42+Burjassot+Valencia',
 } as const;
 
-// Horario de atencion
+// Horario de atención
 const schedule = {
   weekdays: 'Lunes a Viernes: 9:00 - 19:00',
-  saturday: 'Sabados: 10:00 - 14:00',
+  saturday: 'Sábados: 10:00 - 14:00',
 } as const;
 
-// Enlaces de navegacion
+// Enlaces de navegación
 const navLinks = [
   { href: '/', label: 'Inicio' },
   { href: '/propiedades', label: 'Propiedades' },
@@ -42,8 +42,8 @@ const navLinks = [
 // Enlaces legales
 const legalLinks = [
   { href: '/aviso-legal', label: 'Aviso Legal' },
-  { href: '/privacidad', label: 'Politica de Privacidad' },
-  { href: '/cookies', label: 'Politica de Cookies' },
+  { href: '/privacidad', label: 'Política de Privacidad' },
+  { href: '/cookies', label: 'Política de Cookies' },
 ] as const;
 
 // Redes sociales (placeholders por ahora)
@@ -71,7 +71,7 @@ const socialLinks = [
     <!-- Main Footer Content -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
 
-      <!-- Column 1: Logo + Descripcion + Redes Sociales -->
+      <!-- Column 1: Logo + Descripción + Redes Sociales -->
       <div class="text-center md:text-left space-y-4">
         <!-- Logo -->
         <a
@@ -82,9 +82,9 @@ const socialLinks = [
           <span class="text-xl font-display font-bold">L&A Burjassot Llars</span>
         </a>
 
-        <!-- Descripcion -->
+        <!-- Descripción -->
         <p class="text-sm text-gray-400 leading-relaxed">
-          Tu inmobiliaria de confianza en Burjassot. Acompanamiento integral
+          Tu inmobiliaria de confianza en Burjassot. Acompañamiento integral
           en la compra y venta de viviendas con trato cercano y transparente.
         </p>
 
@@ -104,9 +104,9 @@ const socialLinks = [
         </div>
       </div>
 
-      <!-- Column 2: Navegacion -->
+      <!-- Column 2: Navegación -->
       <div class="text-center md:text-left">
-        <h3 class="text-lg font-semibold mb-4">Navegacion</h3>
+        <h3 class="text-lg font-semibold mb-4">Navegación</h3>
         <nav aria-label="Enlaces del footer">
           <ul class="space-y-3">
             {navLinks.map(({ href, label }) => (
@@ -127,7 +127,7 @@ const socialLinks = [
       <div class="text-center md:text-left">
         <h3 class="text-lg font-semibold mb-4">Contacto</h3>
         <ul class="space-y-3">
-          <!-- Telefono -->
+          <!-- Teléfono -->
           <li>
             <a
               href={contactInfo.phoneHref}
@@ -151,7 +151,7 @@ const socialLinks = [
             </a>
           </li>
 
-          <!-- Direccion -->
+          <!-- Dirección -->
           <li>
             <a
               href={contactInfo.addressHref}
