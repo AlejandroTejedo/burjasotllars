@@ -1,0 +1,194 @@
+---
+/**
+ * Input Component
+ *
+ * Form input component supporting text, textarea, and select types.
+ * Includes label, placeholder, and error state support.
+ *
+ * @example
+ * <Input label="Name" placeholder="Enter your name" />
+ * <Input type="textarea" label="Message" rows={4} />
+ * <Input type="select" label="Type" options={[{value: '1', label: 'Option 1'}]} />
+ * <Input label="Email" error="Invalid email address" />
+ */
+
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/lib/utils';
+
+export type InputType = 'text' | 'email' | 'tel' | 'password' | 'number' | 'textarea' | 'select';
+
+export interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+export interface Props extends Omit<HTMLAttributes<'input'>, 'type'> {
+  /** Input type */
+  type?: InputType;
+  /** Label text */
+  label?: string;
+  /** Input placeholder */
+  placeholder?: string;
+  /** Error message (triggers error state when provided) */
+  error?: string;
+  /** Help text shown below input */
+  helpText?: string;
+  /** Input name attribute */
+  name?: string;
+  /** Input id attribute */
+  id?: string;
+  /** Whether the input is required */
+  required?: boolean;
+  /** Whether the input is disabled */
+  disabled?: boolean;
+  /** Number of rows for textarea */
+  rows?: number;
+  /** Options for select type */
+  options?: SelectOption[];
+  /** Default placeholder for select */
+  selectPlaceholder?: string;
+  /** Additional CSS classes for the input */
+  class?: string;
+  /** Additional CSS classes for the wrapper */
+  wrapperClass?: string;
+}
+
+const {
+  type = 'text',
+  label,
+  placeholder,
+  error,
+  helpText,
+  name,
+  id = name,
+  required = false,
+  disabled = false,
+  rows = 4,
+  options = [],
+  selectPlaceholder = 'Select an option',
+  class: inputClassName,
+  wrapperClass,
+  ...rest
+} = Astro.props;
+
+// Base input styles
+const baseInputStyles = 'w-full px-3 py-2 bg-background border rounded-md text-base text-foreground placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed';
+
+// Error or default border styles
+const borderStyles = error
+  ? 'border-2 border-destructive focus:ring-destructive'
+  : 'border-input focus:ring-primary';
+
+// Label styles
+const labelStyles = 'block text-sm font-medium text-gray-700 mb-2';
+
+// Error message styles
+const errorStyles = 'text-sm text-destructive flex items-center gap-1 mt-2';
+
+// Help text styles
+const helpTextStyles = 'text-sm text-gray-500 mt-2';
+
+const computedInputStyles = cn(
+  baseInputStyles,
+  borderStyles,
+  type === 'select' && 'appearance-none cursor-pointer',
+  type === 'textarea' && 'resize-none',
+  inputClassName
+);
+---
+
+<div class={cn('space-y-2', wrapperClass)}>
+  {label && (
+    <label for={id} class={labelStyles}>
+      {label}
+      {required && <span class="text-destructive ml-1" aria-hidden="true">*</span>}
+    </label>
+  )}
+
+  {type === 'textarea' ? (
+    <textarea
+      id={id}
+      name={name}
+      placeholder={placeholder}
+      rows={rows}
+      required={required}
+      disabled={disabled}
+      class={computedInputStyles}
+      aria-invalid={error ? 'true' : undefined}
+      aria-describedby={error ? `${id}-error` : helpText ? `${id}-help` : undefined}
+      {...rest}
+    />
+  ) : type === 'select' ? (
+    <div class="relative">
+      <select
+        id={id}
+        name={name}
+        required={required}
+        disabled={disabled}
+        class={computedInputStyles}
+        aria-invalid={error ? 'true' : undefined}
+        aria-describedby={error ? `${id}-error` : helpText ? `${id}-help` : undefined}
+        {...rest}
+      >
+        <option value="" disabled selected>{selectPlaceholder}</option>
+        {options.map((option) => (
+          <option value={option.value} disabled={option.disabled}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <!-- Custom dropdown arrow -->
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+        <svg
+          class="h-4 w-4 text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+    </div>
+  ) : (
+    <input
+      type={type}
+      id={id}
+      name={name}
+      placeholder={placeholder}
+      required={required}
+      disabled={disabled}
+      class={computedInputStyles}
+      aria-invalid={error ? 'true' : undefined}
+      aria-describedby={error ? `${id}-error` : helpText ? `${id}-help` : undefined}
+      {...rest}
+    />
+  )}
+
+  {error && (
+    <p id={`${id}-error`} class={errorStyles} role="alert">
+      <svg
+        class="w-4 h-4 flex-shrink-0"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      {error}
+    </p>
+  )}
+
+  {helpText && !error && (
+    <p id={`${id}-help`} class={helpTextStyles}>
+      {helpText}
+    </p>
+  )}
+</div>
