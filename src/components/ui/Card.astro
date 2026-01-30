@@ -62,14 +62,14 @@ const hasHeader = Astro.slots.has('header');
 const hasFooter = Astro.slots.has('footer');
 ---
 
-<div class={computedStyles} {...rest}>
+<div class={cn(computedStyles, 'flex flex-col')} {...rest}>
   {hasHeader && (
     <div class={cn('border-b border-gray-200', padding.includes('p-') ? `px-6 py-4` : padding)}>
       <slot name="header" />
     </div>
   )}
 
-  <div class={cn(padding, hasHeader && 'pt-4', hasFooter && 'pb-4')}>
+  <div class={cn(padding, hasHeader && 'pt-4', hasFooter && 'pb-4', 'flex-1')}>
     <slot />
   </div>
 

@@ -15,5 +15,17 @@
 - [ ] Gramática revisada
 - [ ] Sin errores ortográficos
 
+## Interactividad y Hover
+
+### Regla de hover
+- **SOLO** añadir efectos hover a elementos clickables (links, botones)
+- Si un elemento NO es interactivo, NO debe tener hover
+- Esto mejora la UX y no confunde al usuario
+
+### Ejemplos
+- **Cards no clickables**: usar `hoverable={false}` en el componente Card
+- **Links dentro de cards**: estos SÍ deben tener hover ya que son clickables
+- **Botones**: siempre deben tener feedback visual en hover
+
 ## Otras reglas
 (se irán añadiendo según el proyecto avance)
