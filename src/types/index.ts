@@ -35,3 +35,29 @@ export interface NavItem {
 export interface NavConfig {
   mainNav: NavItem[];
 }
+
+/**
+ * Property type for real estate listings
+ */
+export interface Property {
+  /** Unique identifier for the property */
+  id: string;
+  /** Title or name of the property */
+  title: string;
+  /** Location/address of the property */
+  location: string;
+  /** Price in euros */
+  price: number;
+  /** URL of the main property image */
+  image?: string;
+  /** Number of bedrooms */
+  bedrooms?: number;
+  /** Number of bathrooms */
+  bathrooms?: number;
+  /** Area in square meters */
+  area?: number;
+  /** Whether this is a new listing */
+  isNew?: boolean;
+  /** Whether this property is featured */
+  isFeatured?: boolean;
+}
