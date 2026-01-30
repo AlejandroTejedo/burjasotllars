@@ -1,0 +1,71 @@
+---
+import '@/styles/global.css';
+import { siteConfig, getPageTitle, getCanonicalUrl, type SEOProps } from '@/lib/seo';
+
+interface Props extends Partial<SEOProps> {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = siteConfig.description,
+  canonical,
+  ogImage = siteConfig.ogImage,
+  ogType = 'website',
+  twitterCard = 'summary_large_image',
+  noindex = false,
+  nofollow = false,
+} = Astro.props;
+
+const pageTitle = getPageTitle(title);
+const canonicalUrl = canonical ?? getCanonicalUrl(Astro.url.pathname);
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteConfig.url}${ogImage}`;
+
+const robotsContent = [
+  noindex ? 'noindex' : 'index',
+  nofollow ? 'nofollow' : 'follow',
+].join(', ');
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{pageTitle}</title>
+    <meta name="title" content={pageTitle} />
+    <meta name="description" content={description} />
+    <meta name="robots" content={robotsContent} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content={twitterCard} />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <slot />
+  </body>
+</html>
