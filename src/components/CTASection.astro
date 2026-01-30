@@ -1,0 +1,93 @@
+---
+/**
+ * CTA Section Component (Final Call-to-Action)
+ *
+ * Displays a prominent call-to-action section with contact buttons.
+ * Features:
+ * - Dark background with overlay for high contrast
+ * - Two CTA buttons: Phone call (primary/terracotta) and WhatsApp (green #25D366)
+ * - Responsive: buttons stacked on mobile, side-by-side on desktop
+ * - Anchor id="contacto" for navigation
+ *
+ * Following Design System: Terracota Mediterranea palette
+ * Following HOME_DESIGN.md section "7. CTA FINAL"
+ *
+ * SSG: This component is fully static with no client-side hydration needed.
+ */
+
+import { Phone, MessageCircle } from '@lucide/astro';
+
+/** Phone number for contact links */
+const PHONE_NUMBER = '+34639280786';
+const PHONE_DISPLAY = '639 280 786';
+const WHATSAPP_URL = `https://wa.me/34639280786`;
+---
+
+<section
+  id="contacto"
+  class="relative py-16 md:py-24 lg:py-32 overflow-hidden"
+  aria-labelledby="cta-heading"
+>
+  <!-- Background with gradient overlay (no image for now) -->
+  <div class="absolute inset-0 z-0 bg-gray-900">
+    <!-- Gradient overlay for visual interest -->
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+      aria-hidden="true"
+    >
+    </div>
+    <!-- Decorative gradient accent -->
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent"
+      aria-hidden="true"
+    >
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 md:px-8 text-center">
+    <!-- Title -->
+    <h2
+      id="cta-heading"
+      class="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6"
+    >
+      ¿Empezamos a buscar tu hogar?
+    </h2>
+
+    <!-- Subtitle -->
+    <p class="text-lg md:text-xl text-white/90 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
+      Llámanos o escríbenos por WhatsApp. Estaremos encantadas de escucharte y ayudarte a encontrar
+      la vivienda perfecta para ti.
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4">
+      <!-- Phone Button (Primary - Terracotta) -->
+      <a
+        href={`tel:${PHONE_NUMBER}`}
+        class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold text-lg rounded-lg transition-all hover:bg-primary-dark hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-900"
+        aria-label={`Llamar ahora al ${PHONE_DISPLAY}`}
+      >
+        <Phone class="w-5 h-5" aria-hidden="true" />
+        Llamar ahora
+      </a>
+
+      <!-- WhatsApp Button (Green) -->
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] text-white font-semibold text-lg rounded-lg transition-all hover:bg-[#20BA5A] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-gray-900"
+        aria-label="Contactar por WhatsApp"
+      >
+        <MessageCircle class="w-5 h-5" aria-hidden="true" />
+        WhatsApp
+      </a>
+    </div>
+
+    <!-- Contact Info / Schedule -->
+    <div class="mt-12 pt-8 border-t border-white/20 text-white/80 text-sm">
+      <p>Horario de atención: Lunes a Viernes 9:00 - 19:00 | Sábados 10:00 - 14:00</p>
+    </div>
+  </div>
+</section>
