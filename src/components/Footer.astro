@@ -1,0 +1,207 @@
+---
+/**
+ * Footer.astro
+ *
+ * Footer informativo con logo, navegación, contacto, horario, redes sociales y enlaces legales.
+ * Implementa HU-004: Footer informativo para la web de Burjassot Llars.
+ *
+ * Responsive:
+ * - Mobile (<768px): 1 columna, contenido centrado
+ * - Tablet (768px-1024px): 2 columnas
+ * - Desktop (>=1024px): 4 columnas
+ */
+
+import { Home as HomeIcon, Phone, MapPin, Clock, MessageCircle, Instagram, Facebook, Linkedin } from '@lucide/astro';
+
+// Año dinámico para el copyright
+const currentYear = new Date().getFullYear();
+
+// Datos de contacto
+const contactInfo = {
+  phone: '+34 639 280 786',
+  phoneHref: 'tel:+34639280786',
+  whatsappHref: 'https://wa.me/34639280786',
+  address: 'Avda. Ausias March 42, 46100 Burjassot (Valencia)',
+  addressHref: 'https://maps.google.com/?q=Avda+Ausias+March+42+Burjassot+Valencia',
+} as const;
+
+// Horario de atención
+const schedule = {
+  weekdays: 'Lunes a Viernes: 9:00 - 19:00',
+  saturday: 'Sábados: 10:00 - 14:00',
+} as const;
+
+// Enlaces de navegación
+const navLinks = [
+  { href: '/', label: 'Inicio' },
+  { href: '/propiedades', label: 'Propiedades' },
+  { href: '/servicios', label: 'Servicios' },
+  { href: '/sobre-nosotros', label: 'Sobre Nosotros' },
+] as const;
+
+// Enlaces legales
+const legalLinks = [
+  { href: '/aviso-legal', label: 'Aviso Legal' },
+  { href: '/privacidad', label: 'Política de Privacidad' },
+  { href: '/cookies', label: 'Política de Cookies' },
+] as const;
+
+// Redes sociales (placeholders por ahora)
+const socialLinks = [
+  {
+    href: 'https://instagram.com/burjassotllars',
+    label: 'Instagram',
+    Icon: Instagram
+  },
+  {
+    href: 'https://facebook.com/burjassotllars',
+    label: 'Facebook',
+    Icon: Facebook
+  },
+  {
+    href: 'https://linkedin.com/company/burjassotllars',
+    label: 'LinkedIn',
+    Icon: Linkedin
+  },
+] as const;
+---
+
+<footer class="bg-gray-800 text-white py-12 md:py-16">
+  <div class="container">
+    <!-- Main Footer Content -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
+
+      <!-- Column 1: Logo + Descripción + Redes Sociales -->
+      <div class="text-center md:text-left space-y-4">
+        <!-- Logo -->
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 transition-colors hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-800 rounded-lg"
+        >
+          <HomeIcon class="w-6 h-6 text-primary" aria-hidden="true" />
+          <span class="text-xl font-display font-bold">L&A Burjassot Llars</span>
+        </a>
+
+        <!-- Descripción -->
+        <p class="text-sm text-gray-400 leading-relaxed">
+          Tu inmobiliaria de confianza en Burjassot. Acompañamiento integral
+          en la compra y venta de viviendas con trato cercano y transparente.
+        </p>
+
+        <!-- Redes Sociales -->
+        <div class="flex items-center justify-center md:justify-start gap-3 pt-2">
+          {socialLinks.map(({ href, label, Icon }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center w-10 h-10 bg-white/10 rounded-lg transition-colors hover:bg-primary focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              aria-label={label}
+            >
+              <Icon class="w-5 h-5" aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Column 2: Navegación -->
+      <div class="text-center md:text-left">
+        <h3 class="text-lg font-semibold mb-4">Navegación</h3>
+        <nav aria-label="Enlaces del footer">
+          <ul class="space-y-3">
+            {navLinks.map(({ href, label }) => (
+              <li>
+                <a
+                  href={href}
+                  class="text-sm text-gray-400 transition-colors hover:text-primary focus:outline-none focus:text-primary"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Column 3: Contacto + Horario -->
+      <div class="text-center md:text-left">
+        <h3 class="text-lg font-semibold mb-4">Contacto</h3>
+        <ul class="space-y-3">
+          <!-- Teléfono -->
+          <li>
+            <a
+              href={contactInfo.phoneHref}
+              class="inline-flex items-start gap-2 text-sm text-gray-400 transition-colors hover:text-primary focus:outline-none focus:text-primary"
+            >
+              <Phone class="w-4 h-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <span>{contactInfo.phone}</span>
+            </a>
+          </li>
+
+          <!-- WhatsApp -->
+          <li>
+            <a
+              href={contactInfo.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-start gap-2 text-sm text-gray-400 transition-colors hover:text-primary focus:outline-none focus:text-primary"
+            >
+              <MessageCircle class="w-4 h-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <span>WhatsApp</span>
+            </a>
+          </li>
+
+          <!-- Dirección -->
+          <li>
+            <a
+              href={contactInfo.addressHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-start gap-2 text-sm text-gray-400 transition-colors hover:text-primary focus:outline-none focus:text-primary"
+            >
+              <MapPin class="w-4 h-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <span>{contactInfo.address}</span>
+            </a>
+          </li>
+
+          <!-- Horario -->
+          <li class="pt-2">
+            <div class="inline-flex items-start gap-2 text-sm text-gray-400">
+              <Clock class="w-4 h-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <div>
+                <p>{schedule.weekdays}</p>
+                <p>{schedule.saturday}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Legal -->
+      <div class="text-center md:text-left">
+        <h3 class="text-lg font-semibold mb-4">Legal</h3>
+        <ul class="space-y-3">
+          {legalLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                class="text-sm text-gray-400 transition-colors hover:text-primary focus:outline-none focus:text-primary"
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar: Copyright -->
+    <div class="pt-8 border-t border-white/10 text-center">
+      <p class="text-sm text-gray-400">
+        &copy; {currentYear} L&A Burjassot Llars. Todos los derechos reservados.
+      </p>
+    </div>
+
+  </div>
+</footer>
