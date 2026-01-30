@@ -1,0 +1,61 @@
+---
+/**
+ * Badge Component
+ *
+ * Visual indicators for states, categories, or labels.
+ * Supports multiple color variants and optional icons.
+ *
+ * @example
+ * <Badge variant="primary">New</Badge>
+ * <Badge variant="secondary">Available</Badge>
+ * <Badge variant="outline">3 bedrooms</Badge>
+ */
+
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/lib/utils';
+
+export type BadgeVariant = 'default' | 'primary' | 'secondary' | 'accent' | 'destructive' | 'outline';
+
+export interface Props extends HTMLAttributes<'span'> {
+  /** Visual style variant */
+  variant?: BadgeVariant;
+  /** Use rounded-full (pill) shape instead of rounded */
+  pill?: boolean;
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const {
+  variant = 'default',
+  pill = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+// Base styles
+const baseStyles = 'inline-flex items-center gap-1 px-2 py-1 text-xs font-medium';
+
+// Border radius based on pill prop
+const radiusStyles = pill ? 'rounded-full px-3' : 'rounded';
+
+// Variant styles
+const variantStyles: Record<BadgeVariant, string> = {
+  default: 'bg-gray-100 text-gray-700',
+  primary: 'bg-primary text-primary-foreground',
+  secondary: 'bg-secondary text-secondary-foreground',
+  accent: 'bg-accent text-accent-foreground',
+  destructive: 'bg-destructive text-destructive-foreground',
+  outline: 'bg-transparent border border-gray-300 text-gray-700',
+};
+
+const computedStyles = cn(
+  baseStyles,
+  radiusStyles,
+  variantStyles[variant],
+  className
+);
+---
+
+<span class={computedStyles} {...rest}>
+  <slot />
+</span>
