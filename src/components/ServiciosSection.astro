@@ -1,0 +1,124 @@
+---
+/**
+ * Servicios Section Component
+ *
+ * Displays the three main services offered by Burjassot Llars:
+ * - Compraventa de viviendas
+ * - Construcción y reforma
+ * - Diseño de interiores
+ *
+ * Following Design System: Terracota Mediterranea palette
+ * Following HOME_DESIGN.md section "5. SERVICIOS"
+ *
+ * SSG: This component is fully static with no client-side hydration needed.
+ */
+
+import { Home, Hammer, Palette, ArrowRight } from '@lucide/astro';
+import Card from '@/components/ui/Card.astro';
+
+interface Service {
+  icon: typeof Home;
+  iconBgClass: string;
+  iconColorClass: string;
+  title: string;
+  description: string;
+  href: string;
+}
+
+const services: Service[] = [
+  {
+    icon: Home,
+    iconBgClass: 'bg-primary/10',
+    iconColorClass: 'text-primary',
+    title: 'Compraventa de viviendas',
+    description:
+      'Te acompañamos en todo el proceso de compra o venta de tu vivienda. Valoraciones realistas, gestión completa de documentación y asesoramiento integral hasta la firma.',
+    href: '/servicios/compraventa',
+  },
+  {
+    icon: Hammer,
+    iconBgClass: 'bg-secondary/10',
+    iconColorClass: 'text-secondary',
+    title: 'Construcción y reforma',
+    description:
+      'Coordinamos y gestionamos tu proyecto de reforma u obra nueva de principio a fin. Profesionales de confianza, presupuestos claros y seguimiento constante.',
+    href: '/servicios/reformas',
+  },
+  {
+    icon: Palette,
+    iconBgClass: 'bg-accent/10',
+    iconColorClass: 'text-accent',
+    title: 'Diseño de interiores',
+    description:
+      'Transformamos tu vivienda en el hogar que siempre imaginaste. Interiorismo y decoración personalizada, distribución de espacios y selección de materiales.',
+    href: '/servicios/diseno-interiores',
+  },
+];
+---
+
+<section
+  id="servicios"
+  class="py-12 md:py-16 lg:py-20 bg-muted"
+  aria-labelledby="servicios-heading"
+>
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <!-- Section Header -->
+    <div class="text-center mb-12 md:mb-16">
+      <h2
+        id="servicios-heading"
+        class="font-display text-3xl md:text-4xl font-bold text-gray-700 leading-tight mb-4"
+      >
+        Nuestros servicios
+      </h2>
+      <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+        Acompañamiento integral desde la búsqueda hasta mucho después de firmar.
+        Somos tus aliadas en cada paso.
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      {
+        services.map((service) => {
+          const IconComponent = service.icon;
+          return (
+            <Card
+              variant="default"
+              padding="p-8"
+              class="text-center transition-all duration-300"
+            >
+              {/* Icon */}
+              <div
+                class={`inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 ${service.iconBgClass} rounded-full mb-6`}
+              >
+                <IconComponent
+                  class={`w-8 h-8 md:w-10 md:h-10 ${service.iconColorClass}`}
+                  aria-hidden="true"
+                />
+              </div>
+
+              {/* Title */}
+              <h3 class="text-xl md:text-2xl font-semibold text-gray-700 mb-4">
+                {service.title}
+              </h3>
+
+              {/* Description */}
+              <p class="text-base text-gray-600 leading-relaxed mb-6">
+                {service.description}
+              </p>
+
+              {/* Link */}
+              <a
+                href={service.href}
+                class="inline-flex items-center gap-2 text-primary font-medium text-base transition-all hover:gap-3 hover:text-[hsl(11,61%,45%)] focus:outline-none focus:ring-2 focus:ring-primary focus:rounded"
+              >
+                Más información
+                <ArrowRight class="w-4 h-4" aria-hidden="true" />
+              </a>
+            </Card>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
