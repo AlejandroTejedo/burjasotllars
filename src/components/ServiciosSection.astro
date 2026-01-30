@@ -85,36 +85,40 @@ const services: Service[] = [
             <Card
               variant="default"
               padding="p-8"
-              class="text-center transition-all duration-300"
+              hoverable={false}
+              class="text-center"
             >
-              {/* Icon */}
-              <div
-                class={`inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 ${service.iconBgClass} rounded-full mb-6`}
-              >
-                <IconComponent
-                  class={`w-8 h-8 md:w-10 md:h-10 ${service.iconColorClass}`}
-                  aria-hidden="true"
-                />
+              {/* Flex container for vertical alignment */}
+              <div class="flex flex-col h-full">
+                {/* Icon */}
+                <div
+                  class={`inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 ${service.iconBgClass} rounded-full mb-6 mx-auto`}
+                >
+                  <IconComponent
+                    class={`w-8 h-8 md:w-10 md:h-10 ${service.iconColorClass}`}
+                    aria-hidden="true"
+                  />
+                </div>
+
+                {/* Title */}
+                <h3 class="text-xl md:text-2xl font-semibold text-gray-700 mb-4">
+                  {service.title}
+                </h3>
+
+                {/* Description - flex-1 to take available space */}
+                <p class="text-base text-gray-600 leading-relaxed mb-6 flex-1">
+                  {service.description}
+                </p>
+
+                {/* Link - mt-auto to align at bottom */}
+                <a
+                  href={service.href}
+                  class="inline-flex items-center justify-center gap-2 text-primary font-medium text-base transition-all hover:gap-3 hover:text-[hsl(11,61%,45%)] focus:outline-none focus:ring-2 focus:ring-primary focus:rounded mt-auto"
+                >
+                  Más información
+                  <ArrowRight class="w-4 h-4" aria-hidden="true" />
+                </a>
               </div>
-
-              {/* Title */}
-              <h3 class="text-xl md:text-2xl font-semibold text-gray-700 mb-4">
-                {service.title}
-              </h3>
-
-              {/* Description */}
-              <p class="text-base text-gray-600 leading-relaxed mb-6">
-                {service.description}
-              </p>
-
-              {/* Link */}
-              <a
-                href={service.href}
-                class="inline-flex items-center gap-2 text-primary font-medium text-base transition-all hover:gap-3 hover:text-[hsl(11,61%,45%)] focus:outline-none focus:ring-2 focus:ring-primary focus:rounded"
-              >
-                Más información
-                <ArrowRight class="w-4 h-4" aria-hidden="true" />
-              </a>
             </Card>
           );
         })
