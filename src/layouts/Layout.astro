@@ -1,6 +1,7 @@
 ---
 import '@/styles/global.css';
 import { siteConfig, getPageTitle, getCanonicalUrl, type SEOProps } from '@/lib/seo';
+import Header from '@/components/Header.astro';
 
 interface Props extends Partial<SEOProps> {
   title?: string;
@@ -70,6 +71,9 @@ const robotsContent = [
     <meta name="theme-color" content="#1F1A16" media="(prefers-color-scheme: dark)" />
   </head>
   <body class="min-h-screen bg-background font-sans antialiased">
-    <slot />
+    <Header />
+    <main>
+      <slot />
+    </main>
   </body>
 </html>
